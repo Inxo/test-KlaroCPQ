@@ -1,0 +1,59 @@
+version: '3'
+
+services:
+  fake_server:
+    build:
+      context: ./fake_server
+      dockerfile: Dockerfile
+    image: fake_server
+    container_name: fake_server
+    restart: unless-stopped
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./fake_server:/home/node/app
+    command: node server.js
+
+  php:
+    build:
+      context: .
+      target: symfony_php
+      args:
+        SYMFONY_VERSION: ${SYMFONY_VERSION:-}
+        SKELETON: ${SKELETON:-symfony/skeleton}
+        STABILITY: ${STABILITY:-stable}
+    container_name: php
+    restart: unless-stopped
+    volumes:
+      - php_socket:/var/run/php
+      - .:/srv/app
+    healthcheck:
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 30s
+
+  # nginx
+  nginx:
+    image: nginx:alpine
+    logging:
+      options:
+        max-size: "1024k"
+        max-file: "3"
+    container_name: nginx
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+    volumes:
+      - .:/srv/app # serve static
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+
+# Mercure is installed as a Caddy module, prevent the Flex recipe from installing another service
+###> symfony/mercure-bundle ###
+###< symfony/mercure-bundle ###
+
+volumes:
+  php_socket:
+###> symfony/mercure-bundle ###
+###< symfony/mercure-bundle ###

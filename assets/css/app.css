@@ -1,0 +1,24 @@
+body {
+    padding-top:70px;
+    background: #ffffff;
+    animation: mymove 5s;
+}
+@keyframes mymove {
+    0%   {background-color: #fff;}
+    10%  {background-color: #dcdca5;}
+    20%  {background-color: #a8a8ef;}
+    30% {background-color: #acf3ac;}
+    40% {background-color: #eed3d7;}
+    50% {background-color: #a0d7d1;}
+    60% {background-color: #dcb89f;}
+    70% {background-color: #c588db;}
+    80% {background-color: #9ba6d0;}
+    90% {background-color: #bf82b0;}
+    100% {background-color: #fff;}
+}
+.action {
+    cursor: pointer;
+}
+.form {
+    padding-bottom: 30px;
+}
