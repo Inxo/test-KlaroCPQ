@@ -10,7 +10,7 @@ Test server.js: [fake_server](/fake_server)
 ## Installation
 
 ```
-git clone https://github.com/inxo/test-task.git
+git clone git@github.com:Inxo/test-KlaroCPQ.git
 cd test-task
 ```
 
